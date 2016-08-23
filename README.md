@@ -1,4 +1,3 @@
-slides: https://speakerdeck.com/philips/etcd-at-oscon-2016
 
 # locksmith - coordinate cluster reboots
 
@@ -23,11 +22,13 @@ First, download the latest release and follow the instructions at the bottom of 
 
 
 ```
+export ETCDCTL_API=2
 export ETCD_MACHINES='http://127.0.0.1:2379'
 skydns -addr 127.0.0.1:5355
 ```
 
 ```
+export ETCDCTL_API=2
 etcdctl set /skydns/local/skydns/east/production/mail     '{"host":"mail-east.example.com","priority":20}'
 dig -p 5355 @127.0.0.1 SRV mail.production.east.skydns.local
 ```
