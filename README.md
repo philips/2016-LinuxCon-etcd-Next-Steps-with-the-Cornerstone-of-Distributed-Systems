@@ -79,6 +79,12 @@ database_user = {{getv "/myapp/database/user"}}
 confd -watch -backend etcd -node 127.0.0.1:2379 -confdir confd
 ```
 
+```
+export ETCDCTL_API=2
+etcdctl set /myapp/database/url mysql://localhost/db
+etcdctl set /myapp/database/user root
+```
+
 # vulcand - an http load balancer
 
 - Homepage: https://github.com/mailgun/vulcand
@@ -88,6 +94,7 @@ vulcand  -etcd=http://localhost:2379 -logSeverity=INFO
 ```
 
 ```
+export ETCDCTL_API=2
 etcdctl set /vulcand/backends/b1/servers/srv1 '{"URL": "http://localhost:5000"}'
 etcdctl set /vulcand/frontends/f1/frontend '{"Type": "http", "BackendId": "b1", "Route": "Path(`/`)"}'
 ```
@@ -105,6 +112,7 @@ boom http://localhost:8181
 ```
 
 ```
+export ETCDCTL_API=2
 etcdctl set /vulcand/backends/b1/servers/srv2 '{"URL": "http://localhost:3000"}'
 ```
 
@@ -119,12 +127,10 @@ boom http://localhost:8181
 # kubernetes - service discovery and load balancing
 
 - Homepage: kubernetes.io
-- get up and running: https://coreos.com/blog/introducing-the-kubelet-in-coreos/
-- example app: https://github.com/kubernetes/kubernetes/tree/master/examples/https-nginx
+- get up and running: https://coreos.com/kubernetes or https://github.com/kubernetes/minikube/releases
 
 ```
-kubectl create -f secret.json
-kubectl create -f nginx.yaml
+kubectl create -f ./guestbook
 ```
 
 ```
